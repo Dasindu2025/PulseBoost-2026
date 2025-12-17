@@ -1,177 +1,212 @@
-﻿<Window
-    x:Class="PulseBoost.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="PulseBoost"
-    Width="1200"
-    Height="800"
-    ResizeMode="NoResize"
-    WindowStartupLocation="CenterScreen"
-    Background="#F9FAFB"
-    MouseMove="Window_MouseMove">
+﻿<Window x:Class="PulseBoost.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PulseBoost"
+        Width="1200"
+        Height="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="#F9FAFB">
 
-    <Window.Resources>
+    <!-- ROOT WITH SAFE ENTRANCE ANIMATION -->
+    <Grid x:Name="Root"
+          Opacity="0"
+          RenderTransformOrigin="0.5,0.5">
 
-        <!-- Neon glow pulse (safe) -->
-        <Storyboard x:Key="NeonPulse">
-            <DoubleAnimation
-                Storyboard.TargetProperty="(Border.Effect).Opacity"
-                From="0.4"
-                To="0.9"
-                Duration="0:0:2"
-                AutoReverse="True"
-                RepeatBehavior="Forever"/>
-        </Storyboard>
+        <Grid.RenderTransform>
+            <TranslateTransform Y="30"/>
+        </Grid.RenderTransform>
 
-        <!-- Image Card Style -->
-        <Style x:Key="ImageCard" TargetType="Border">
-            <Setter Property="Width" Value="260"/>
-            <Setter Property="Height" Value="260"/>
-            <Setter Property="CornerRadius" Value="28"/>
-            <Setter Property="ClipToBounds" Value="True"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="BorderBrush" Value="#6C63FF"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect
-                        Color="#6C63FF"
-                        BlurRadius="30"
-                        ShadowDepth="0"
-                        Opacity="0.4"/>
-                </Setter.Value>
-            </Setter>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
 
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="Loaded">
-                    <BeginStoryboard Storyboard="{StaticResource NeonPulse}"/>
-                </EventTrigger>
-            </Style.Triggers>
-        </Style>
+                        <!-- Fade in -->
+                        <DoubleAnimation
+                            Storyboard.TargetProperty="Opacity"
+                            From="0" To="1"
+                            Duration="0:0:0.6"/>
 
-    </Window.Resources>
+                        <!-- Slide up -->
+                        <DoubleAnimation
+                            Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                            From="30" To="0"
+                            Duration="0:0:0.6"/>
 
-    <Canvas Width="1200" Height="800">
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
 
-        <!-- LOGO -->
-        <TextBlock Canvas.Left="64" Canvas.Top="40"
-                   Text="PulseBoost"
-                   FontSize="14"
-                   FontWeight="SemiBold"
-                   Foreground="#6C63FF"/>
+        <!-- MAIN LAYOUT -->
+        <Grid Margin="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="420"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- HEADLINE -->
-        <StackPanel Canvas.Left="64" Canvas.Top="90">
+            <!-- LEFT PANEL -->
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
 
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="We Give "
-                           FontSize="45"
-                           FontWeight="SemiBold"/>
-                <TextBlock Text="Gaming "
-                           FontSize="45"
-                           FontWeight="SemiBold"
-                           Foreground="#6C63FF"/>
-                <TextBlock Text="🎮"
-                           FontSize="32"
-                           Margin="6,10,0,0"/>
+                <!-- Logo -->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 30">
+                    <Image Source="assests/images/joystick.png"
+                           Width="22" Height="22" Margin="0 0 8 0"/>
+                    <TextBlock Text="PulseBoost"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="#6D63FF"/>
+                </StackPanel>
+
+                <!-- Headings -->
+                <TextBlock>
+                    <Run Text="We Give " FontSize="34" FontWeight="Bold"/>
+                    <Run Text="Gaming" FontSize="34" FontWeight="Bold" Foreground="#6D63FF"/>
+                </TextBlock>
+
+                <TextBlock Text="Place To Get Powers"
+                           FontSize="34"
+                           FontWeight="Bold"/>
+
+                <TextBlock Text="Of Ace Winners"
+                           FontSize="34"
+                           FontWeight="Bold"
+                           Margin="0 0 0 30"/>
+
+                <!-- Email -->
+                <TextBlock Text="Email" Margin="0 0 0 6"/>
+                <TextBox Height="44"
+                         Padding="12"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         Text="Example@email.com"/>
+
+                <!-- Password -->
+                <TextBlock Text="Password" Margin="0 16 0 6"/>
+                <PasswordBox Height="44"
+                             Padding="12"
+                             Background="#F8FAFC"
+                             BorderBrush="#E2E8F0"/>
+
+                <TextBlock Text="Forgot Password?"
+                           Foreground="#6D63FF"
+                           HorizontalAlignment="Right"
+                           Margin="0 6 0 20"/>
+
+                <!-- SIGN IN BUTTON (HOVER SCALE + GLOW) -->
+                <Button Content="Sign in"
+                        Height="48"
+                        FontWeight="SemiBold"
+                        Foreground="White"
+                        Background="#122B3A"
+                        BorderThickness="0"
+                        Cursor="Hand">
+
+                    <Button.RenderTransform>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    </Button.RenderTransform>
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="0" Opacity="0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="#6D63FF"
+                                                              BlurRadius="20"
+                                                              Opacity="0.6"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <TextBlock Text="Or"
+                           HorizontalAlignment="Center"
+                           Margin="0 16"/>
+
+                <!-- Google -->
+                <Button Height="44" Margin="0 6"
+                        Background="#F8FAFC"
+                        BorderBrush="#E2E8F0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="assests/images/Google.png"
+                               Width="18" Height="18" Margin="0 0 8 0"/>
+                        <TextBlock Text="Sign in with Google"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Facebook -->
+                <Button Height="44"
+                        Background="#F8FAFC"
+                        BorderBrush="#E2E8F0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="assests/images/Facebook.png"
+                               Width="18" Height="18" Margin="0 0 8 0"/>
+                        <TextBlock Text="Sign in with Facebook"/>
+                    </StackPanel>
+                </Button>
+
+                <TextBlock Margin="0 20 0 0" HorizontalAlignment="Center">
+                    <Run Text="Don't you have an account? "/>
+                    <Run Text="Sign up" Foreground="#6D63FF"/>
+                </TextBlock>
+
             </StackPanel>
 
-            <TextBlock Text="Place To Get Powers"
-                       FontSize="45"
-                       FontWeight="SemiBold"/>
-            <TextBlock Text="Of Ace Winners"
-                       FontSize="45"
-                       FontWeight="SemiBold"/>
-        </StackPanel>
+            <!-- RIGHT IMAGE GRID -->
+            <Grid Grid.Column="1" Margin="40 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-        <!-- EMAIL -->
-        <TextBlock Canvas.Left="64" Canvas.Top="300" Text="Email"/>
-        <Border Canvas.Left="64" Canvas.Top="324"
-                Width="388" Height="48"
-                CornerRadius="12"
-                BorderBrush="#D6DEEA"
-                BorderThickness="1"
-                Background="#F8FBFF">
-            <TextBox Text="Example@email.com"
-                     BorderThickness="0"
-                     Background="Transparent"
-                     Margin="14,0"
-                     VerticalContentAlignment="Center"/>
-        </Border>
+                <Border Grid.Row="0" Grid.Column="0" CornerRadius="24" Margin="10">
+                    <Border.Background>
+                        <ImageBrush ImageSource="assests/images/rectangle_3438.png"
+                                    Stretch="UniformToFill"/>
+                    </Border.Background>
+                </Border>
 
-        <!-- PASSWORD -->
-        <TextBlock Canvas.Left="64" Canvas.Top="388" Text="Password"/>
-        <Border Canvas.Left="64" Canvas.Top="412"
-                Width="388" Height="48"
-                CornerRadius="12"
-                BorderBrush="#D6DEEA"
-                BorderThickness="1"
-                Background="#F8FBFF">
-            <PasswordBox BorderThickness="0"
-                         Background="Transparent"
-                         Margin="14,0"/>
-        </Border>
+                <Border Grid.Row="0" Grid.Column="1" CornerRadius="24" Margin="10">
+                    <Border.Background>
+                        <ImageBrush ImageSource="assests/images/rectangle_3440.png"
+                                    Stretch="UniformToFill"/>
+                    </Border.Background>
+                </Border>
 
-        <TextBlock Canvas.Left="304" Canvas.Top="468"
-                   Text="Forgot Password?"
-                   Foreground="#4F6BFF"/>
+                <Border Grid.Row="1" Grid.Column="0" CornerRadius="24" Margin="10">
+                    <Border.Background>
+                        <ImageBrush ImageSource="assests/images/rectangle_3441.png"
+                                    Stretch="UniformToFill"/>
+                    </Border.Background>
+                </Border>
 
-        <!-- SIGN IN -->
-        <Border Canvas.Left="64" Canvas.Top="496"
-                Width="388" Height="52"
-                CornerRadius="14"
-                Background="#162D3A">
-            <TextBlock Text="Sign in"
-                       Foreground="White"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-        </Border>
+                <Border Grid.Row="1" Grid.Column="1" CornerRadius="24" Margin="10">
+                    <Border.Background>
+                        <ImageBrush ImageSource="assests/images/rectangle_3442.png"
+                                    Stretch="UniformToFill"/>
+                    </Border.Background>
+                </Border>
 
-        <!-- OR -->
-        <Line X1="64" Y1="572" X2="216" Y2="572" Stroke="#CBD5E1"/>
-        <TextBlock Canvas.Left="244" Canvas.Top="562" Text="Or"/>
-        <Line X1="276" Y1="572" X2="452" Y2="572" Stroke="#CBD5E1"/>
-
-        <!-- GOOGLE -->
-        <Border Canvas.Left="64" Canvas.Top="592"
-                Width="388" Height="46"
-                CornerRadius="12"
-                Background="#F3F7FA">
-            <TextBlock Text="Sign in with Google"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-        </Border>
-
-        <!-- FACEBOOK -->
-        <Border Canvas.Left="64" Canvas.Top="648"
-                Width="388" Height="46"
-                CornerRadius="12"
-                Background="#F3F7FA">
-            <TextBlock Text="Sign in with Facebook"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-        </Border>
-
-        <!-- IMAGES -->
-        <Canvas Canvas.Left="520" Canvas.Top="100">
-
-            <Border x:Name="Img1" Style="{StaticResource ImageCard}" Canvas.Left="0" Canvas.Top="0">
-                <Image Source="pack://application:,,,/assests/images/rectangle_3438.png" Stretch="UniformToFill"/>
-            </Border>
-
-            <Border x:Name="Img2" Style="{StaticResource ImageCard}" Canvas.Left="280" Canvas.Top="0">
-                <Image Source="pack://application:,,,/assests/images/rectangle_3440.png" Stretch="UniformToFill"/>
-            </Border>
-
-            <Border x:Name="Img3" Style="{StaticResource ImageCard}" Canvas.Left="0" Canvas.Top="290">
-                <Image Source="pack://application:,,,/assests/images/rectangle_3441.png" Stretch="UniformToFill"/>
-            </Border>
-
-            <Border x:Name="Img4" Style="{StaticResource ImageCard}" Canvas.Left="280" Canvas.Top="290">
-                <Image Source="pack://application:,,,/assests/images/rectangle_3442.png" Stretch="UniformToFill"/>
-            </Border>
-
-        </Canvas>
-
-    </Canvas>
+            </Grid>
+        </Grid>
+    </Grid>
 </Window>
