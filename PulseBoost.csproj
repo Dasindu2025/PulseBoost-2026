@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="assests\fonts\Montserrat-SemiBold.ttf" />
+    <None Remove="assests\images\joystick.png" />
+    <None Remove="assests\images\rectangle_3438.png" />
+    <None Remove="assests\images\rectangle_3440.png" />
+    <None Remove="assests\images\rectangle_3441.png" />
+    <None Remove="assests\images\rectangle_3442.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assests\fonts\Montserrat-SemiBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assests\images\joystick.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assests\images\rectangle_3438.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assests\images\rectangle_3440.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assests\images\rectangle_3441.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assests\images\rectangle_3442.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
